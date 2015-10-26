@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+    <context:component-scan base-package="com.epam.springcore.service"/>
+    <context:component-scan base-package="com.epam.springcore.dao"/>
+    <context:component-scan base-package="com/epam/springcore/aop"/>
+    <aop:aspectj-autoproxy />
+
+    <import resource="discount.xml"/>
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>auditorium.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="user" class="com.epam.springcore.domain.User">
+        <property name="id" value="1"/>
+        <property name="name" value="Mike Fay"/>
+        <property name="email" value="Mike_Fay@epam.com"/>
+        <property name="birthDay" value="28/10/2015"/>
+        <property name="tickets" ref="ticket"/>
+    </bean>
+
+    <bean id="ticket" class="com.epam.springcore.domain.Ticket">
+        <property name="id" value="1"/>
+        <property name="name" value="Ticket 1"/>
+        <property name="price" value="3.25$"/>
+    </bean>
+
+    <bean id="auditorium" class="com.epam.springcore.domain.Auditorium">
+        <property name="id" value="1"/>
+        <property name="name" value="${auditoriumName}"/>
+        <property name="seatsNumber" value="${seatsNumber}"/>
+        <property name="vipSeats" value="${vipSeats}"/>
+    </bean>
+
+</beans>
